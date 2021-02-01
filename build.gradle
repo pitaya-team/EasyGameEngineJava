@@ -3,15 +3,15 @@ plugins {
 }
 
 group 'io.theflysong.github'
-version project.version
+version project_version
 
 jar {
     baseName = 'EG-Engine'
-    version = 'SNAPSHOT-21w06a'
+    version = project_version
 }
 
 task cpLib(type: Copy) {
-    from './libs/'
+    from './libs/lwjgl'
     into('./build/libs')
 }
 
@@ -19,10 +19,11 @@ task zip(type: Zip, dependsOn: [cpLib]) {
     from './build/libs/'
     destinationDir file('./build/output')
     baseName 'EG-Engine'
-    version project.version
+    version project_version
+    classifier 'snapshot'
 }
 
-task release(type: Copy, dependsOn: [jar, cpLib])
+task release(type: Copy, dependsOn: [jar, zip])
 
 tasks.withType(Jar) {
     destinationDir = file("./build/libs/jar")
