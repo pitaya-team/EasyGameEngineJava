@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group 'io.theflysong.github'
+version project.version
+
+jar {
+    baseName = 'EG-Engine'
+    version = 'SNAPSHOT-21w06a'
+}
+
+task cpLib(type: Copy) {
+    from './libs/'
+    into('./build/libs')
+}
+
+task zip(type: Zip, dependsOn: [cpLib]) {
+    from './build/libs/'
+    destinationDir file('./build/output')
+    baseName 'EG-Engine'
+    version project.version
+}
+
+task release(type: Copy, dependsOn: [jar, cpLib])
+
+tasks.withType(Jar) {
+    destinationDir = file("./build/libs/jar")
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: './libs/lwjgl/jar', include: ['*.jar'])
+    runtime fileTree(dir: './libs/lwjgl/jar', include: ['*.jar'])
+}
