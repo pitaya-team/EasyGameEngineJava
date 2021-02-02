@@ -1,81 +1,92 @@
 package io.theflysong.github.window;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.*;
+import io.theflysong.github.util.Timer;
+import io.theflysong.github.util.math.Vec4f;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.opengl.GL;
 
-import java.nio.ByteBuffer;
+import static org.lwjgl.glfw.GLFW.*;
+import static io.theflysong.github.util.GLConstant.*;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Window {
+    private GLFWErrorCallback glfwErrorHandle = new GLFWErrorCallback() {
+        @Override
+        public void invoke(int error, long description) {
+            System.err.println("[GLFW Error] Error Code: " + error);
+            System.err.println("[GLFW Error] Error Description: " + description);
+        }
+    };
     protected int width;
-    protected int length;
+    protected int height;
+    protected String title;
+    protected long window;
     protected int max_fps;
-    protected DisplayMode mode;
+    protected int fps = 0;
+    protected int last_fps = 0;
+    protected int last_time = 0;
 
-    public Window(int width, int length, String title) {
-        this(width, length, title, Integer.MAX_VALUE);
+    public Window(int width, int height, String title) {
+        this(width, height, title, 30);
     }
 
-    public Window(int width, int length, String title, int max_fps) {
+    public Window(int width, int height, String title, Vec4f backgroundColor) {
+        this(width, height, title, 30, backgroundColor);
+    }
+
+    public Window(int width, int height, String title, int max_fps) {
+        this(width, height, title, max_fps, new Vec4f(0, 0, 0, 1));
+    }
+
+    public Window(int width, int height, String title, int max_fps, Vec4f backgroundColor) {
+        this.width = width;
+        this.height = height;
+        this.title = title;
         this.max_fps = max_fps;
-        ContextAttribs context = new ContextAttribs(3, 2)
-                .withProfileCore(true);
-        try {
-            mode = new DisplayMode(width, length);
-            Display.create(new PixelFormat(), context);
-            Display.setDisplayMode(mode);
-            Display.setTitle(title);
-            //Display.setResizable(true);
-        } catch (LWJGLException e) {
-            e.printStackTrace();
+
+        glfwSetErrorCallback(glfwErrorHandle);
+
+        if (! glfwInit()) {
+            throw new IllegalStateException("Can't init GLFW Library, please check your VGA driver and update it");
         }
 
-        GL11.glViewport(0, 0, width, length);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+        window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+        if (window == nullptr) {
+            glfwTerminate();
+            throw new RuntimeException("Failed to create game window");
+        }
+
+        glfwMakeContextCurrent(window);
+        GL.createCapabilities();
+
+        glViewport(0, 0, width, height);
+        glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, backgroundColor.w);
     }
 
-    public void setIcon(ByteBuffer[] icon) {
-        Display.setIcon(icon);
-        Display.update();
-    }
+    public boolean update() throws InterruptedException {
+        glfwSwapBuffers(window);
+        glfwPollEvents();
 
-    public void setWidth(int width) throws LWJGLException {
-        this.width = width;
-        mode = new DisplayMode(width, length);
-        Display.setDisplayMode(mode);
-        Display.update();
+        if ((Timer.getTime() / 1000 - last_time / 1000) >= 1) {
+            last_fps = fps;
+            fps = 0;
+        }
 
-        GL11.glViewport(0, 0, width, length);
-    }
+        if (Timer.getTime() - last_time < (1000 / max_fps)) {
+            Thread.sleep(Timer.getTime() - last_time);
+        }
+        fps ++;
 
-    public void setLength(int length) throws LWJGLException {
-        this.length = length;
-        mode = new DisplayMode(width, length);
-        Display.setDisplayMode(mode);
-        Display.update();
-
-        GL11.glViewport(0, 0, width, length);
-    }
-
-    public void setFullScreen(boolean fullScreen) throws LWJGLException {
-        Display.setFullscreen(fullScreen);
-        Display.update();
-    }
-
-    public void setTitle(String title) {
-        Display.setTitle(title);
-        Display.update();
-    }
-
-    public boolean update() {
-        Display.sync(max_fps);
-        Display.update();
-        if (Display.isCloseRequested()) {
-            close();
+        if (glfwWindowShouldClose(window)) {
+            glfwDestroyWindow(window);
+            glfwTerminate();
+            glfwErrorHandle.free();
             return false;
         }
         return true;
-    }
-
-    public void close() {
-        Display.destroy();
     }
 }
