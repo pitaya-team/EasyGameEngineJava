@@ -47,7 +47,7 @@ public class Window {
         glfwSetErrorCallback(glfwErrorHandle);
 
         if (! glfwInit()) {
-            throw new IllegalStateException("Can't init GLFW Library, please check your VGA driver and update it");
+            throw new IllegalStateException("[Library Error] Can't init GLFW Library, please check your VGA driver and update it");
         }
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -57,7 +57,7 @@ public class Window {
         window = glfwCreateWindow(width, height, title, nullptr, nullptr);
         if (window == nullptr) {
             glfwTerminate();
-            throw new RuntimeException("Failed to create game window");
+            throw new RuntimeException("[Window Error] Failed to create game window");
         }
 
         glfwMakeContextCurrent(window);
@@ -81,12 +81,14 @@ public class Window {
         }
         fps ++;
 
-        if (glfwWindowShouldClose(window)) {
-            glfwDestroyWindow(window);
-            glfwTerminate();
-            glfwErrorHandle.free();
-            return false;
-        }
-        return true;
+        return glfwWindowShouldClose(window);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        glfwErrorHandle.free();
+        super.finalize();
     }
 }

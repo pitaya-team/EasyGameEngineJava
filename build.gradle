@@ -15,6 +15,11 @@ task cpLib(type: Copy) {
     into('./build/libs')
 }
 
+task cpTestRes(type: Copy) {
+    from './src/test/resource'
+    into('./build/resource')
+}
+
 task zip(type: Zip, dependsOn: [cpLib]) {
     from './build/libs/'
     destinationDir file('./build/output')
