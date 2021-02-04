@@ -1,53 +1,46 @@
-plugins {
-    id 'java'
+
+// EG-Engine
+
+apply plugin: 'java'
+
+group = 'io.theflysong.github'
+version = project_version
+
+archivesBaseName = 'EG-Engine'
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+
+repositories {
+
+    maven {
+        //阿里云
+        url 'https://maven.aliyun.com/repository/public/'
+    }
+
+    mavenLocal()
 }
 
-group 'io.theflysong.github'
-version project_version
 
 jar {
     baseName = 'EG-Engine'
     version = project_version
 }
 
-task cpLib(type: Copy) {
-    from './libs/'
-    into('./build/libs')
-}
-
-task cpTestRes(type: Copy) {
-    from './src/test/resource'
-    into('./build/resource')
-}
-
-task zip(type: Zip, dependsOn: [cpLib]) {
-    from './build/libs/'
-    destinationDir file('./build/output')
-    baseName 'EG-Engine'
-    version project_version
-    classifier 'snapshot'
-}
-
-task remove(type: Delete){
-    FileTree tree = fileTree(dir: './build/libs')
-    tree.each {File file ->
-        delete file
-    }
-}
-
-task release(type: Copy, dependsOn: [remove, jar, zip])
-
-tasks.withType(Jar) {
-    destinationDir = file("./build/libs/")
-}
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compile fileTree(dir: './libs/', include: ['*.jar'])
-    runtime fileTree(dir: './libs/', include: ['*.jar'])
+
+    compile 'org.lwjgl:lwjgl:3.2.3'
+    compile 'org.lwjgl:lwjgl-assimp:3.2.3'
+    compile 'org.lwjgl:lwjgl-bgfx:3.2.3'
+    compile 'org.lwjgl:lwjgl-glfw:3.2.3'
+    compile 'org.lwjgl:lwjgl-llvm:3.2.3'
+    compile 'org.lwjgl:lwjgl-lz4:3.2.3'
+    compile 'org.lwjgl:lwjgl-nanovg:3.2.3'
+    compile 'org.lwjgl:lwjgl-nuklear:3.2.3'
+    compile 'org.lwjgl:lwjgl-openal:3.2.3'
+    compile 'org.lwjgl:lwjgl-opus:3.2.3'
+    compile 'org.lwjgl:lwjgl-par:3.2.3'
+    compile 'org.lwjgl:lwjgl-stb:3.2.3'
+    compile 'org.lwjgl:lwjgl-tootle:3.2.3'
+    compile 'org.lwjgl:lwjgl-zstd:3.2.3'
+
 }
