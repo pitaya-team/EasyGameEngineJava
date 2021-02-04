@@ -3,7 +3,12 @@ package io.theflysong.github.example.example1;
 import io.theflysong.github.util.math.Vec4f;
 import io.theflysong.github.window.Window;
 
-import static org.lwjgl.opengl.GL11.*;
+//import static org.lwjgl.opengl.GL11.*;
+
+import static org.lwjgl.openal.
+
+import static org.lwjgl.openal.
+
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -11,6 +16,7 @@ public class Main {
 
         do {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
         }
         while (! window.update());
     }
