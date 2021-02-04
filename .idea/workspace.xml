@@ -93,7 +93,7 @@
       <recent name="io.theflysong.github.example.example3" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Run flysong">
+  <component name="RunManager" selected="Gradle.eg-engine [jar]">
     <configuration name="Run example3" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
       <option name="MAIN_CLASS_NAME" value="io.theflysong.github.example.example3.Main" />
@@ -198,12 +198,12 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.Run example4 Server" />
-      <item itemvalue="Application.Run flysong" />
-      <item itemvalue="Application.Run example4 Client" />
-      <item itemvalue="Application.Run example3" />
       <item itemvalue="Gradle.eg-engine [jar]" />
       <item itemvalue="Gradle.eg-engine [release]" />
+      <item itemvalue="应用程序.Run example3" />
+      <item itemvalue="应用程序.Run example4 Client" />
+      <item itemvalue="应用程序.Run example4 Server" />
+      <item itemvalue="应用程序.Run flysong" />
     </list>
     <recent_temporary>
       <list>
