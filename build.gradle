@@ -26,6 +26,15 @@ repositories {
     mavenLocal()
 }
 
+
+task cpTestRes(type: Copy) {
+    from './src/test/resource'
+    into('./build/resource')
+}
+
+
+
+
 jar {
 
     baseName = 'EG-Engine'
