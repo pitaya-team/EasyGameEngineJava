@@ -70,4 +70,12 @@ public class Shader {
     public int getProgram() {
         return shader;
     }
+
+    public void use() {
+        glUseProgram(shader);
+    }
+
+    public int getUniformLocation(String name) {
+        return glGetUniformLocation(shader, name);
+    }
 }

@@ -1,5 +1,7 @@
 package io.theflysong.github.example.example3;
 
+import io.theflysong.github.render.buffer.VertexBuffer;
+import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.buffer.VertexBufferUnit;
 import io.theflysong.github.render.shader.Shader;
 import io.theflysong.github.resource.ResourceLocation;
@@ -7,8 +9,6 @@ import io.theflysong.github.util.math.Vec4f;
 import io.theflysong.github.window.Window;
 
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -18,43 +18,39 @@ public class Main {
                 new ResourceLocation("example3$test"),
                 new ResourceLocation("example3$test")
         );
-        VertexBufferUnit unit = new VertexBufferUnit(shader);
-        unit.addVertex(0.5f).addVertex(0.5f).addVertex(0.0f).
-                addVertex(0.5f).addVertex(-0.5f).addVertex(0.0f).
-                addVertex(-0.5f).addVertex(-0.5f).addVertex(0.0f).
-                addVertex(-0.5f).addVertex(0.5f).addVertex(0.0f).
-                addIndex(0).addIndex(1).addIndex(3).
-                addIndex(1).addIndex(2).addIndex(3);
-        int VBO = glGenBuffers();
-        int VAO = glGenVertexArrays();
-        int IBO = glGenBuffers();
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, unit.Vertices2Float(), GL_STATIC_DRAW);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, unit.Indices2Int(), GL_STATIC_DRAW);
+        VertexBuffer buffer = new VertexBuffer();
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
-        glEnableVertexAttribArray(0);
+        buffer.add(VertexBuffer.getBuilder(
+                shader, new VertexBufferFormat().
+                        addVertex3F().
+                        addColor3F()).
+                pos(0.3f, 0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
+                pos(0.3f, -0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
+                pos(-0.3f, -0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
+                pos(-0.3f, 0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
+                index(0, 1, 3).
+                index(1, 2, 3)
+        );
 
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        buffer.add(VertexBuffer.getBuilder(
+                shader, new VertexBufferFormat().
+                        addVertex3F().
+                        addColor3F()).
+                pos(1.0f, 1.0f, 0.0f).color(1.0f, 0.0f, 0.0f).
+                pos(1.0f, 0.5f, 0.0f).color(0.0f, 1.0f, 0.0f).
+                pos(0.5f, 0.5f, 0.0f).color(0.0f, 0.0f, 1.0f).
+                pos(0.5f, 1.0f, 0.0f).color(1.0f, 0.0f, 1.0f).
+                index(0, 1, 3).
+                index(1, 2, 3)
+        );
+
+        buffer.init();
 
         do {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-            glUseProgram(shader.getProgram());
-
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-            glBindVertexArray(VAO);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-            glBindVertexArray(0);
+            buffer.draw();
         }
         while (! window.update());
-
-        glDeleteVertexArrays(VAO);
-        glDeleteBuffers(VBO);
-        glDeleteBuffers(IBO);
     }
 }

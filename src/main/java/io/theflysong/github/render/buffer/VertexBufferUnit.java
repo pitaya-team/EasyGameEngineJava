@@ -3,24 +3,32 @@ package io.theflysong.github.render.buffer;
 import io.theflysong.github.render.shader.Shader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class VertexBufferUnit {
-    protected int VAO = 0;
-    protected int VBO = 0;
-    protected int IBO = 0;
+    protected int VAO;
+    protected int VBO;
+    protected int IBO;
     protected Shader shader;
-    public ArrayList<Float> vertices = new ArrayList<>();
-    public ArrayList<Integer> indices = new ArrayList<>();
+    protected ArrayList<Float> vertices = new ArrayList<>();
+    protected ArrayList<Integer> indices = new ArrayList<>();
     protected VertexBufferFormat format;
+    protected int drawMode;
 
-    public VertexBufferUnit(Shader shader) {
+    public VertexBufferUnit(Shader shader, VertexBufferFormat format) {
+        this(shader, format, GL_STATIC_DRAW);
+    }
+
+    public VertexBufferUnit(Shader shader, VertexBufferFormat format, int drawMode) {
         VAO = glGenVertexArrays();
         VBO = glGenBuffers();
         IBO = glGenBuffers();
         this.shader = shader;
+        this.format = format;
+        this.drawMode = drawMode;
     }
 
     public VertexBufferUnit addIndex(int index) {
@@ -33,7 +41,11 @@ public class VertexBufferUnit {
         return this;
     }
 
-    public float[] Vertices2Float() {
+    public float[] getVertices() {
+        return Vertices2Float();
+    }
+
+    protected float[] Vertices2Float() {
         float[] array = new float[vertices.size()];
         int i = 0;
 
@@ -43,7 +55,11 @@ public class VertexBufferUnit {
         return array;
     }
 
-    public int[] Indices2Int() {
+    public int[] getIndices() {
+        return Indices2Int();
+    }
+
+    protected int[] Indices2Int() {
         int[] array = new int[indices.size()];
         int i = 0;
 
@@ -53,7 +69,49 @@ public class VertexBufferUnit {
         return array;
     }
 
-    public void start() {
+    public void init() {
+        glBindVertexArray(VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, Vertices2Float(), drawMode);
 
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices2Int(), drawMode);
+
+        List<Integer> layout = format.getLayout();
+        int stride = 0;
+
+        for (Integer i : layout) {
+            stride += i;
+        }
+
+        stride *= Float.BYTES;
+
+        int index = 0;
+        int offset = 0;
+        for (Integer i : layout) {
+            glVertexAttribPointer(index, i, GL_FLOAT,false, stride,offset);
+            glEnableVertexAttribArray(index);
+            offset += i * Float.BYTES;
+            index ++;
+        }
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+
+    public void use() {
+        shader.use();
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        glDeleteVertexArrays(VAO);
+        glDeleteBuffers(VBO);
+        glDeleteBuffers(IBO);
     }
 }
