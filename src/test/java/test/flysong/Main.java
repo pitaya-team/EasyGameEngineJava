@@ -49,17 +49,17 @@ public class Main {
                 index(1, 2, 3)
         );
 
-        MemoryStack stack = MemoryStack.stackPush();
         buffer.init();
         MatrixStack matrixStack = new MatrixStack();
-        matrixStack.translate(-0.4f, -0.4f, 1.0f);
-        matrixStack.scale(1.2f, 1.2f, 1.0f);
-        FloatBuffer fb = matrixStack.getMatrix().get(stack.mallocFloat(16));
 
         do {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-            glUniformMatrix4fv(shader.getUniformLocation("matrix"), false, fb);
+            matrixStack.push();
+            matrixStack.translate(-0.4f, -0.4f, 1.0f);
+            matrixStack.scale(1.2f, 1.2f, 1.0f);
+            glUniformMatrix4fv(shader.getUniformLocation("matrix"), false, matrixStack.toValue());
             buffer.draw();
+            matrixStack.pop();
         }
         while (! window.update());
     }
