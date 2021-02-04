@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73977c62-1dc7-421d-8015-2abc75bdeec9" name="Default Changelist" comment="Fix Example1">
+    <list default="true" id="73977c62-1dc7-421d-8015-2abc75bdeec9" name="Default Changelist" comment="Update matrix">
       <change afterPath="$PROJECT_DIR$/src/test/java/test/flysong/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Run_test1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Run_example1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Run_test2_Client.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Run_example2_Client.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Run_test2_Server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Run_example2_Server.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/theflysong/github/util/math/MatrixStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/theflysong/github/util/math/MatrixStack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resource/assets/example4/shader/test.glfs" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resource/assets/flysong/shader/test.glfs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resource/assets/example4/shader/test.glvs" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resource/assets/flysong/shader/test.glvs" afterDir="false" />
@@ -35,18 +31,12 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="EG-Engine" type="f1a62948:ProjectNode" />
+                <item name="eg-engine" type="f1a62948:ProjectNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="EG-Engine" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="EG-Engine" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
+                <item name="eg-engine" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -224,6 +214,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ShelveChangesManager" show_recycled="true" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -296,7 +287,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612431264158</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Update matrix">
+      <created>1612437042037</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1612437042037</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -321,6 +319,7 @@
     <MESSAGE value="Update the Version" />
     <MESSAGE value="Add Example4" />
     <MESSAGE value="Fix Example1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Example1" />
+    <MESSAGE value="Update matrix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update matrix" />
   </component>
 </project>
