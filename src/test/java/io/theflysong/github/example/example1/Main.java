@@ -3,8 +3,6 @@ package io.theflysong.github.example.example1;
 import io.theflysong.github.util.math.Vec4f;
 import io.theflysong.github.window.Window;
 
-import java.io.*;
-
 import static org.lwjgl.opengl.GL11.*;
 
 public class Main {
@@ -14,6 +12,6 @@ public class Main {
         do {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         }
-        while (window.update());
+        while (! window.update());
     }
 }
