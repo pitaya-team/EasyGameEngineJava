@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73977c62-1dc7-421d-8015-2abc75bdeec9" name="Default Changelist" comment="Update matrix">
-      <change afterPath="$PROJECT_DIR$/src/test/java/test/flysong/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/theflysong/github/util/math/MatrixStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/theflysong/github/util/math/MatrixStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resource/assets/example4/shader/test.glfs" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resource/assets/flysong/shader/test.glfs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resource/assets/example4/shader/test.glvs" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resource/assets/flysong/shader/test.glvs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,11 +29,11 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="eg-engine" type="f1a62948:ProjectNode" />
+                <item name="EG-Engine" type="f1a62948:ProjectNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="eg-engine" type="f1a62948:ProjectNode" />
+                <item name="EG-Engine" type="f1a62948:ProjectNode" />
                 <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
@@ -294,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612437042037</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Update matrix">
+      <created>1612441914581</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1612441914581</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
