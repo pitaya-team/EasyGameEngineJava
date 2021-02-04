@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73977c62-1dc7-421d-8015-2abc75bdeec9" name="Default Changelist" comment="Update matrix">
+    <list default="true" id="73977c62-1dc7-421d-8015-2abc75bdeec9" name="Default Changelist" comment="Update build.gradle">
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +94,18 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Run flysong">
+    <configuration name="Run example1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="io.theflysong.github.example.example1.Main" />
+      <module name="EG-Engine.test" />
+      <selectedOptions>
+        <option name="beforeRunTasks" />
+        <option name="vmParameters" />
+      </selectedOptions>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="Gradle.BeforeRunTask" enabled="true" tasks="cpTestRes" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+      </method>
+    </configuration>
     <configuration name="Run example3" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
       <option name="MAIN_CLASS_NAME" value="io.theflysong.github.example.example3.Main" />
@@ -198,6 +210,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.Run example1" />
       <item itemvalue="Application.Run example4 Server" />
       <item itemvalue="Application.Run flysong" />
       <item itemvalue="Application.Run example4 Client" />
@@ -299,7 +312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612441914581</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Update build.gradle">
+      <created>1612443057261</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1612443057261</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -325,6 +345,7 @@
     <MESSAGE value="Add Example4" />
     <MESSAGE value="Fix Example1" />
     <MESSAGE value="Update matrix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update matrix" />
+    <MESSAGE value="Update build.gradle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update build.gradle" />
   </component>
 </project>
