@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public abstract class AbstractClient extends AbstractGame {
+public abstract class AbstractClient extends AbstractDist {
     protected Socket server;
     protected DataOutputStream sendStream;
     protected DataInputStream receiveStream;

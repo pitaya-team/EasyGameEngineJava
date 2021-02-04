@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractServer extends AbstractGame {
+public abstract class AbstractServer extends AbstractDist {
     protected List<Socket> clients = new ArrayList();
     protected List<DataOutputStream> sendStreams = new ArrayList();
     protected List<DataInputStream> receiveStreams = new ArrayList();
