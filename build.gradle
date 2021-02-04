@@ -26,11 +26,25 @@ repositories {
     mavenLocal()
 }
 
-
 jar {
+
     baseName = 'EG-Engine'
     version = project_version
+
+    /*
+    manifest {
+        attributes "Main-Class": "cn.MainTest"
+    }
+    */
+
+    configurations.compile.each { dep ->
+        from(project.zipTree(dep)){
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
 }
+
+
 
 
 switch (OperatingSystem.current()) {

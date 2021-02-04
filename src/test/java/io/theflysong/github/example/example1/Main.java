@@ -3,11 +3,8 @@ package io.theflysong.github.example.example1;
 import io.theflysong.github.util.math.Vec4f;
 import io.theflysong.github.window.Window;
 
-//import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.*;
 
-import static org.lwjgl.openal.
-
-import static org.lwjgl.openal.
 
 
 public class Main {
