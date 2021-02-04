@@ -5,6 +5,7 @@ import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.buffer.VertexBufferUnit;
 import io.theflysong.github.render.shader.Shader;
 import io.theflysong.github.resource.ResourceLocation;
+import io.theflysong.github.util.math.MatrixStack;
 import io.theflysong.github.util.math.Vec4f;
 import io.theflysong.github.window.Window;
 
@@ -39,10 +40,12 @@ public class Client extends AbstractClient {
         unit.addIndex(0).addIndex(1).addIndex(3).addIndex(1).addIndex(2).addIndex(3);
         unit.init();
 
+        MatrixStack stack = new MatrixStack();
+
         try {
             do {
                 glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-                unit.use();
+                unit.use(stack);
             }
             while (! window.update());
         }

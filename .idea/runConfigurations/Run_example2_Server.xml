@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run example2 Server" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="io.theflysong.github.example.example2.Main" />
+    <module name="EG-Engine.test" />
+    <option name="PROGRAM_PARAMETERS" value="-Server 17000" />
+    <selectedOptions>
+      <option name="beforeRunTasks" />
+      <option name="vmParameters" />
+    </selectedOptions>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

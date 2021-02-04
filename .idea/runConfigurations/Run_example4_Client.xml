@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run example4 Client" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="io.theflysong.github.example.example4.Main" />
+    <module name="EG-Engine.test" />
+    <option name="PROGRAM_PARAMETERS" value="-Client localhost 17000" />
+    <selectedOptions>
+      <option name="vmParameters" />
+    </selectedOptions>
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="cpTestRes" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+    </method>
+  </configuration>
+</component>
