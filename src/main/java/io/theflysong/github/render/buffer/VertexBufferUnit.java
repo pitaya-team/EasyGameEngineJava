@@ -1,9 +1,11 @@
 package io.theflysong.github.render.buffer;
 
 import io.theflysong.github.render.shader.Shader;
+import io.theflysong.github.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -17,6 +19,7 @@ public class VertexBufferUnit {
     protected ArrayList<Integer> indices = new ArrayList<>();
     protected VertexBufferFormat format;
     protected int drawMode;
+    protected Function<MatrixStack, MatrixStack> genMatrix = null;
 
     public VertexBufferUnit(Shader shader, VertexBufferFormat format) {
         this(shader, format, GL_STATIC_DRAW);
@@ -38,6 +41,11 @@ public class VertexBufferUnit {
 
     public VertexBufferUnit addVertex(float vertex) {
         vertices.add(vertex);
+        return this;
+    }
+
+    public VertexBufferUnit setMatrix(Function<MatrixStack, MatrixStack> generator) {
+        this.genMatrix = generator;
         return this;
     }
 
@@ -100,7 +108,15 @@ public class VertexBufferUnit {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    public void use() {
+    public void use(MatrixStack matrixStack) {
+        if (genMatrix != null) {
+            matrixStack.push();
+            glUniformMatrix4fv(shader.getUniformLocation("matrix"), false, genMatrix.apply(matrixStack).toValue());
+            matrixStack.pop();
+        }
+        else {
+            glUniformMatrix4fv(shader.getUniformLocation("matrix"), false, matrixStack.toValue());
+        }
         shader.use();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
         glBindVertexArray(VAO);

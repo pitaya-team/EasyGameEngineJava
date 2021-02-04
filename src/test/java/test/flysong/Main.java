@@ -35,6 +35,13 @@ public class Main {
                 pos(-0.3f, 0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
                 index(0, 1, 3).
                 index(1, 2, 3)
+                .matrix(
+                        (matrixStack) -> {
+                            matrixStack.translate(-0.3f, -0.3f, 0.0f);
+                            matrixStack.scale(1.5f, 1.5f, 1.5f);
+                            return matrixStack;
+                        }
+                )
         );
 
         buffer.add(VertexBuffer.getBuilder(
@@ -53,13 +60,10 @@ public class Main {
         MatrixStack matrixStack = new MatrixStack();
 
         do {
+            MemoryStack.stackPush();
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-            matrixStack.push();
-            matrixStack.translate(-0.4f, -0.4f, 1.0f);
-            matrixStack.scale(1.2f, 1.2f, 1.0f);
-            glUniformMatrix4fv(shader.getUniformLocation("matrix"), false, matrixStack.toValue());
-            buffer.draw();
-            matrixStack.pop();
+            buffer.draw(matrixStack);
+            MemoryStack.stackPop();
         }
         while (! window.update());
     }

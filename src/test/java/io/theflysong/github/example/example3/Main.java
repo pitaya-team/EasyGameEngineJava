@@ -5,6 +5,7 @@ import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.buffer.VertexBufferUnit;
 import io.theflysong.github.render.shader.Shader;
 import io.theflysong.github.resource.ResourceLocation;
+import io.theflysong.github.util.math.MatrixStack;
 import io.theflysong.github.util.math.Vec4f;
 import io.theflysong.github.window.Window;
 
@@ -47,9 +48,11 @@ public class Main {
 
         buffer.init();
 
+        MatrixStack matrixStack = new MatrixStack();
+
         do {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-            buffer.draw();
+            buffer.draw(matrixStack);
         }
         while (! window.update());
     }

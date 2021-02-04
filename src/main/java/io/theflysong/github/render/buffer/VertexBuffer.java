@@ -2,13 +2,12 @@ package io.theflysong.github.render.buffer;
 
 import io.theflysong.github.render.shader.Shader;
 import io.theflysong.github.util.IBuilder;
-import io.theflysong.github.util.math.Vec2f;
-import io.theflysong.github.util.math.Vec3f;
-import io.theflysong.github.util.math.Vec3i;
-import io.theflysong.github.util.math.Vec4f;
+import io.theflysong.github.util.math.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 
@@ -31,15 +30,24 @@ public class VertexBuffer {
         units.add(unit);
     }
 
+    public void copyLast(Function<MatrixStack, MatrixStack> generator) {
+        units.add(getLastUnit());
+        getLastUnit().setMatrix(generator);
+    }
+
+    public VertexBufferUnit getLastUnit() {
+        return units.get(units.size() - 1);
+    }
+
     public void init() {
         for (VertexBufferUnit unit : units) {
             unit.init();
         }
     }
 
-    public void draw() {
+    public void draw(MatrixStack matrixStack) {
         for (VertexBufferUnit unit : units) {
-            unit.use();
+            unit.use(matrixStack);
         }
     }
 
@@ -133,6 +141,11 @@ public class VertexBuffer {
 
         public VertexBufferBuilder index(Vec3i index) {
             this.index(index.x, index.y, index.z);
+            return this;
+        }
+
+        public VertexBufferBuilder matrix(Function<MatrixStack, MatrixStack> generator) {
+            unit.setMatrix(generator);
             return this;
         }
 
