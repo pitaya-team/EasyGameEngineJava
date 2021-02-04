@@ -2,7 +2,10 @@ package io.theflysong.github.util.math;
 
 import org.joml.Matrix4f;
 import org.joml.Quaternionfc;
+import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.MemoryUtil;
 
+import java.nio.FloatBuffer;
 import java.util.Stack;
 
 public class MatrixStack {
@@ -10,7 +13,7 @@ public class MatrixStack {
     Matrix4f matrix = new Matrix4f();
 
     public void push() {
-        matrixStack.push(matrix);
+        matrixStack.push(new Matrix4f(matrix));
     }
 
     public void pop() {
@@ -35,5 +38,9 @@ public class MatrixStack {
 
     public void rotate(Quaternionfc quaternion) {
         matrix.rotate(quaternion);
+    }
+
+    public FloatBuffer toValue() {
+        return matrix.get(MemoryStack.stackGet().mallocFloat(16));
     }
 }
