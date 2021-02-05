@@ -5,6 +5,7 @@ import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.buffer.VertexBufferUnit;
 import io.theflysong.github.render.shader.Shader;
 import io.theflysong.github.resource.ResourceLocation;
+import io.theflysong.github.util.ResourceLoader;
 import io.theflysong.github.util.math.MatrixStack;
 import io.theflysong.github.util.math.Vec4f;
 import io.theflysong.github.window.Window;
@@ -15,7 +16,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("project.debug_mode", "true");
         Window window = new Window(500, 400, "Example3", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
-        Shader shader = new Shader(
+        Shader shader = ResourceLoader.loadShader(
+                new ResourceLocation("example3$test"),
                 new ResourceLocation("example3$test"),
                 new ResourceLocation("example3$test")
         );

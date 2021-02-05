@@ -1,29 +1,15 @@
 package io.theflysong.github.render.shader;
 
-import io.theflysong.github.resource.AssetsResource;
 import io.theflysong.github.resource.ResourceLocation;
-
-import java.io.IOException;
+import io.theflysong.github.util.RegistryEntry;
 
 import static org.lwjgl.opengl.GL20.*;
 
-public class Shader {
+public class Shader extends RegistryEntry {
     protected int shader;
 
-    public Shader(ResourceLocation vertexShader, ResourceLocation fragmentShader) {
-        vertexShader.addPrefix("shader/");
-        fragmentShader.addPrefix("shader/");
-        vertexShader.addSuffix(".glvs");
-        fragmentShader.addSuffix(".glfs");
-
-        char[] vertex = new char[32767];
-        char[] fragment = new char[32767];
-        try {
-            new AssetsResource(vertexShader).getResourceAsReader().read(vertex);
-            new AssetsResource(fragmentShader).getResourceAsReader().read(fragment);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Shader(char[] vertex, char[] fragment, ResourceLocation id) {
+        super(id);
         int vertexId, fragmentId;
         int[] status = new int[1];
 
@@ -34,7 +20,7 @@ public class Shader {
         glGetShaderiv(vertexId, GL_COMPILE_STATUS, status);
         if(status[0] == 0) {
             String log = glGetShaderInfoLog(vertexId, 32767);
-            throw new IllegalStateException("[Shader Error] Compile vertex shader " + vertexShader.toString() + "fail: " + log);
+            throw new IllegalStateException("[Shader Error] Compile vertex shader " + id.toString() + "fail: " + log);
         }
 
         fragmentId = glCreateShader(GL_FRAGMENT_SHADER);
@@ -44,7 +30,7 @@ public class Shader {
         glGetShaderiv(fragmentId, GL_COMPILE_STATUS, status);
         if(status[0] == 0) {
             String log = glGetShaderInfoLog(fragmentId, 32767);
-            throw new IllegalStateException("[Shader Error] Compile fragment shader " + fragmentShader.toString() + "fail: " + log);
+            throw new IllegalStateException("[Shader Error] Compile fragment shader " + id.toString() + "fail: " + log);
         }
 
         shader = glCreateProgram();
@@ -55,7 +41,7 @@ public class Shader {
         glGetProgramiv(fragmentId, GL_LINK_STATUS, status);
         if(status[0] == 0) {
             String log = glGetProgramInfoLog(fragmentId, 32767);
-            throw new IllegalStateException("[Shader Error] Link program with vertex shader " + vertexShader.toString() + " and fragment shader " + fragmentShader.toString() + "fail: " + log);
+            throw new IllegalStateException("[Shader Error] Link program " + id.toString() + " fail: " + log);
         }
 
         glDeleteShader(vertexId);
