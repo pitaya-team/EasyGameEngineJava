@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group 'io.theflysong.github'
+version '1.0.0'
+
+jar{
+    manifest{
+        attributes "Main-Class":"io.theflysong.github.Main"
+    }
+}
+
+task cpEGLib(type: Copy) {
+    from '../build/libs/'
+    into('./build/libs/libs/')
+}
+
+task cpWrapper(type: Copy) {
+    from '../gradle/wrapper/gradle-wrapper.jar'
+    into('./build/libs/libs/')
+}
+
+task cpScript(type: Copy) {
+    from './script/'
+    into('./build/libs/')
+}
+
+task zip(type: Zip) {
+    from './build/libs/'
+    destinationDir file('./build/result/')
+    baseName 'eg-engine-generator'
+    version '1.0.0'
+    classifier 'archive'
+}
+
+task release(dependsOn: [jar, cpScript, cpWrapper, cpEGLib, zip]) {
+}
+
+repositories {
+    mavenCentral()
+}
