@@ -4,6 +4,7 @@ import io.theflysong.github.util.Timer;
 import io.theflysong.github.util.math.Vec4f;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.system.MemoryStack;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static io.theflysong.github.util.GLConstant.*;
@@ -65,6 +66,7 @@ public class Window {
 
         glViewport(0, 0, width, height);
         glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, backgroundColor.w);
+        MemoryStack.stackPush();
     }
 
     public boolean update() throws InterruptedException {
@@ -81,11 +83,14 @@ public class Window {
         }
         fps ++;
 
+        MemoryStack.stackPop();
+        MemoryStack.stackPush();
         return glfwWindowShouldClose(window);
     }
 
     @Override
     protected void finalize() throws Throwable {
+        MemoryStack.stackPop();
         glfwDestroyWindow(window);
         glfwTerminate();
         glfwErrorHandle.free();
