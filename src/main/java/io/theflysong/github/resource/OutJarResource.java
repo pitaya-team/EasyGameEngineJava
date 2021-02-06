@@ -2,13 +2,13 @@ package io.theflysong.github.resource;
 
 import java.io.*;
 
-public class DataResource implements IResource {
+public class OutJarResource implements IResource {
     private InputStream resourceStream;
 
-    public DataResource() {
+    public OutJarResource() {
     }
 
-    public DataResource(InputStream stream) {
+    public OutJarResource(InputStream stream) {
         loadResource(stream);
     }
 

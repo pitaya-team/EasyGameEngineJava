@@ -6,5 +6,5 @@ import java.io.InputStream;
 public interface IResource {
     InputStream getResourceAsStream();
     BufferedReader getResourceAsReader();
-    void loadResource(ResourceLocation path);
+    void loadResource(InputStream stream);
 }
