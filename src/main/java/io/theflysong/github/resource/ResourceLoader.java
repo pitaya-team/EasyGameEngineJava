@@ -27,8 +27,8 @@ public class ResourceLoader {
         char[] vertex = new char[32767];
         char[] fragment = new char[32767];
         try {
-            new AssetsResource(vertexShader).getResourceAsReader().read(vertex);
-            new AssetsResource(fragmentShader).getResourceAsReader().read(fragment);
+            AssetsResourceManager.getInstance().getResource(vertexShader).getResourceAsReader().read(vertex);
+            AssetsResourceManager.getInstance().getResource(fragmentShader).getResourceAsReader().read(fragment);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class ResourceLoader {
     public static Texture2D loadTexture2D(ResourceLocation texture) throws IOException {
         texture.addPrefix("texture/");
         ByteBuffer buffer = MemoryUtil.memAlloc(8192);
-        ReadableByteChannel readablebytechannel = Channels.newChannel(new AssetsResource(texture).getResourceAsStream());
+        ReadableByteChannel readablebytechannel = Channels.newChannel(AssetsResourceManager.getInstance().getResource(texture).getResourceAsStream());
 
         while(readablebytechannel.read(buffer) != -1) {
             if (buffer.remaining() == 0) {
