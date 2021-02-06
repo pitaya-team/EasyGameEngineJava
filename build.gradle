@@ -33,21 +33,8 @@ task cpTestRes(type: Copy) {
 }
 
 jar {
-
     baseName = 'EG-Engine'
     version = project_version
-
-    /*
-    manifest {
-        attributes "Main-Class": "cn.MainTest"
-    }
-    */
-
-    configurations.compile.each { dep ->
-        from(project.zipTree(dep)){
-            exclude 'META-INF', 'META-INF/**'
-        }
-    }
 }
 
 project.ext.lwjglVersion = "3.2.3"
