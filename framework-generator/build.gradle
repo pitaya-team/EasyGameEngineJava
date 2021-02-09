@@ -34,8 +34,10 @@ task zip(type: Zip) {
     classifier 'archive'
 }
 
-task release(dependsOn: [jar, cpScript, cpWrapper, cpEGLib, zip]) {
-}
+build.finalizedBy(zip)
+build.finalizedBy(cpScript)
+build.finalizedBy(cpWrapper)
+build.finalizedBy(cpEGLib)
 
 repositories {
     mavenCentral()

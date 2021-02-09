@@ -13,7 +13,7 @@ public class DataResourceManager implements IResourceManager{
     }
 
     @Override
-    public IResource getResource(ResourceLocation path) {
+    public IResource getResource(ResourceLocation path) throws FileNotFoundException {
         InputStream resourceStream = null;
         if (Boolean.getBoolean("project.debug_mode")) {
             File file = new File("./build/resource/data/" + path.getNamespace() + "/" + path.getPath());
@@ -24,7 +24,10 @@ public class DataResourceManager implements IResourceManager{
             }
         }
         else {
-            resourceStream = this.getClass().getResourceAsStream("resource/data/" + path.getNamespace() + "/" + path.getPath());
+            resourceStream = this.getClass().getClassLoader().getResourceAsStream("resource/data/" + path.getNamespace() + "/" + path.getPath());
+        }
+        if (resourceStream == null) {
+            throw new FileNotFoundException("Not found /resource/data/" + path.getNamespace() + "/" + path.getPath());
         }
         return new DataResource(resourceStream);
     }
