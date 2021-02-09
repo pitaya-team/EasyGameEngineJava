@@ -19,8 +19,16 @@ public class GRADLE_CONSTANTS {
                     "\n" +
                     "jar{\n" +
                     "    manifest{\n" +
-                    "        attributes \"Main-Class\":\"{$Main-Class$}\"\n" +
+                    "        attributes \"Main-Class\":\"{$Group$}.{$Main-Class$}\"\n" +
                     "    }\n" +
+                    "    from {\n" +
+                    "        (configurations.runtimeClasspath).collect {\n" +
+                    "            it.isDirectory() ? it : zipTree(it)\n" +
+                    "        }\n" +
+                    "    }\n"+
+                    "    into('resource') {\n" +
+                    "        from 'src/main/resource'\n" +
+                    "    }\n"+
                     "}\n"+
                     "project.ext.lwjglVersion = \"3.2.3\"\n" +
                     "project.ext.jomlVersion = \"1.10.0\"\n" +

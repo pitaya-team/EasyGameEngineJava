@@ -17,6 +17,7 @@ public class OutJarResourceManager implements IResourceManager{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         return new GeneralResource();
     }
 }
