@@ -1,4 +1,4 @@
-package io.theflysong.github.game;
+package io.theflysong.github.network;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

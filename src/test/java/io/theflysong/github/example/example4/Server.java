@@ -1,6 +1,6 @@
 package io.theflysong.github.example.example4;
 
-import io.theflysong.github.game.AbstractServer;
+import io.theflysong.github.network.AbstractServer;
 
 import java.io.IOException;
 
@@ -26,5 +26,10 @@ public class Server extends AbstractServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void update() {
+
     }
 }

@@ -1,6 +1,6 @@
 package io.theflysong.github.example.example2;
 
-import io.theflysong.github.game.AbstractClient;
+import io.theflysong.github.network.AbstractClient;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -18,5 +18,9 @@ public class Client extends AbstractClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void update() {
     }
 }

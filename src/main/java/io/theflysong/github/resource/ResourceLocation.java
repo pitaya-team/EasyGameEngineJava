@@ -43,4 +43,14 @@ public final class ResourceLocation {
     public String toString() {
         return namespace + "$" + path;
     }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(namespace.hashCode() ^ path.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ResourceLocation && ((ResourceLocation) obj).namespace.equals(namespace) && ((ResourceLocation) obj).path.equals(path);
+    }
 }

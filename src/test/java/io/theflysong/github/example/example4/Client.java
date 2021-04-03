@@ -1,6 +1,6 @@
 package io.theflysong.github.example.example4;
 
-import io.theflysong.github.game.AbstractClient;
+import io.theflysong.github.network.AbstractClient;
 import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.buffer.VertexBufferUnit;
 import io.theflysong.github.render.shader.Shader;
@@ -54,5 +54,9 @@ public class Client extends AbstractClient {
         catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void update() {
     }
 }
