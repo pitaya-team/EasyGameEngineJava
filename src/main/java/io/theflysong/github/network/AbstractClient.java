@@ -1,5 +1,7 @@
 package io.theflysong.github.network;
 
+import io.theflysong.github.network.pack.PackManager;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -7,11 +9,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractClient extends AbstractDist {
     protected Socket server;
-    protected DataOutputStream sendStream;
-    protected DataInputStream receiveStream;
+    protected PackManager manager;
 
     protected DataOutputStream getC2SSendStream() throws IOException {
         return new DataOutputStream(server.getOutputStream());
@@ -24,17 +26,25 @@ public abstract class AbstractClient extends AbstractDist {
     protected AbstractClient(InetAddress serverIP, int port) throws IOException {
         super(Dist.CLIENT);
         server = new Socket(serverIP, port);
-        sendStream = getC2SSendStream();
-        receiveStream = getS2CReceiveStream();
+        manager = new PackManager(getS2CReceiveStream(), getC2SSendStream(), -1, this);
     }
 
     @Override
-    public List<DataOutputStream> sends() {
-        return Collections.singletonList(sendStream);
+    public void run() {
+        manager.sendPack(new PackManager.RegisterUUIDPack(UUID.randomUUID()));
     }
 
     @Override
-    public List<DataInputStream> receives() {
-        return Collections.singletonList(receiveStream);
+    public List<PackManager> managers() {
+        return Collections.singletonList(manager);
+    }
+
+    @Override
+    public void update() {
+        try {
+            manager.update();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

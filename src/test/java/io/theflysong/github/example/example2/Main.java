@@ -1,10 +1,13 @@
 package io.theflysong.github.example.example2;
 
+import io.theflysong.github.Init;
+
 import java.io.IOException;
 import java.net.InetAddress;
 
 public class Main {
     public static void main(String[] args) {
+        Init.init();
         if (args.length < 1) {
             throw new IllegalArgumentException("Args not enough");
         }

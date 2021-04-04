@@ -18,18 +18,20 @@ public class Server extends AbstractServer {
 
     @Override
     public void run() {
+        super.run();
         try {
             accept();
-            for (int i = 0 ; i < vertices.length ; i ++) {
-                sendStreams.get(clients.size() - 1).writeFloat(vertices[i]);
-            }
+            managers.get(managers.size() - 1).sendPack(new VertexPack(vertices));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        while (true) {
+            update();
         }
     }
 
     @Override
     public void update() {
-
+        super.update();
     }
 }

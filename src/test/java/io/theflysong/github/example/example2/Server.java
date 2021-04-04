@@ -1,6 +1,7 @@
 package io.theflysong.github.example.example2;
 
 import io.theflysong.github.network.AbstractServer;
+import io.theflysong.github.network.pack.PackManager;
 
 import java.io.IOException;
 
@@ -11,16 +12,20 @@ public class Server extends AbstractServer {
 
     @Override
     public void run() {
+        super.run();
         try {
             accept();
-            sendStreams.get(clients.size() - 1).writeUTF("Hello,Client!");
-            System.out.println(receiveStreams.get(clients.size() - 1).readUTF());
+            managers.get(managers.size() - 1).sendPack(new TestPack("Hello, Client!"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        while (true) {
+            update();
         }
     }
 
     @Override
     public void update() {
+        super.update();
     }
 }
