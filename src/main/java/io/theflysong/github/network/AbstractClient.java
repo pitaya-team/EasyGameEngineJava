@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractClient extends AbstractDist {
     protected Socket server;
@@ -24,5 +26,15 @@ public abstract class AbstractClient extends AbstractDist {
         server = new Socket(serverIP, port);
         sendStream = getC2SSendStream();
         receiveStream = getS2CReceiveStream();
+    }
+
+    @Override
+    public List<DataOutputStream> sends() {
+        return Collections.singletonList(sendStream);
+    }
+
+    @Override
+    public List<DataInputStream> receives() {
+        return Collections.singletonList(receiveStream);
     }
 }

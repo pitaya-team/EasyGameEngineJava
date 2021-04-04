@@ -5,13 +5,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractServer extends AbstractDist {
     protected List<Socket> clients = new ArrayList();
     protected List<DataOutputStream> sendStreams = new ArrayList();
     protected List<DataInputStream> receiveStreams = new ArrayList();
+    protected Map<UUID, Integer> clientMap = new HashMap<>();
     protected ServerSocket server;
 
     protected DataOutputStream getS2CSendStream(int client) throws IOException {
@@ -20,6 +20,10 @@ public abstract class AbstractServer extends AbstractDist {
 
     protected DataInputStream getC2SReceiveStream(int client) throws IOException {
         return new DataInputStream(clients.get(client).getInputStream());
+    }
+
+    protected void registerClientUUID(UUID uuid, int no) {
+        clientMap.put(uuid, no);
     }
 
     protected void accept() throws IOException {
@@ -32,5 +36,15 @@ public abstract class AbstractServer extends AbstractDist {
         super(Dist.SERVER);
         this.server = new ServerSocket(port);
         this.server.setSoTimeout(60000);
+    }
+
+    @Override
+    public List<DataOutputStream> sends() {
+        return sendStreams;
+    }
+
+    @Override
+    public List<DataInputStream> receives() {
+        return receiveStreams;
     }
 }

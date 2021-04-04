@@ -85,6 +85,10 @@ public class Window {
 
         MemoryStack.stackPop();
         MemoryStack.stackPush();
+        return shouldClose();
+    }
+
+    public boolean shouldClose() {
         return glfwWindowShouldClose(window);
     }
 

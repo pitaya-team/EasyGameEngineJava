@@ -66,7 +66,7 @@ public class Events {
         System.out.println("Initializing");
     }
 
-    public static void RegisterEvents() {
+    private static void RegisterEvents() {
         Set<String> classes = PackageUtils.getAllClass();
         for (String clazz_n : classes) {
             if (clazz_n.startsWith("org.lwjgl") || clazz_n.startsWith("org.joml"))
@@ -92,7 +92,7 @@ public class Events {
         }
     }
 
-    public static void RegisterListeners() {
+    private static void RegisterListeners() {
         Set<String> classes = PackageUtils.getAllClass();
         for (String clazz_n : classes) {
             if (clazz_n.startsWith("org.lwjgl") || clazz_n.startsWith("org.joml"))
@@ -128,7 +128,7 @@ public class Events {
         }
     }
 
-    public static void RegisterBuses() {
+    private static void RegisterBuses() {
         Set<String> classes = PackageUtils.getAllClass();
         for (String clazz_n : classes) {
             if (clazz_n.startsWith("org.lwjgl") || clazz_n.startsWith("org.joml"))

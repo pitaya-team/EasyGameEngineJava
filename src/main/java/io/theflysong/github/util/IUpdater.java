@@ -1,5 +1,5 @@
 package io.theflysong.github.util;
 
 public interface IUpdater {
-    void update();
+    void update() throws Exception;
 }
