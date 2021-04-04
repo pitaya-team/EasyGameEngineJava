@@ -1,5 +1,7 @@
 package io.theflysong.github.network;
 
+import io.theflysong.github.network.pack.PackManager;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,8 +11,7 @@ import java.util.*;
 
 public abstract class AbstractServer extends AbstractDist {
     protected List<Socket> clients = new ArrayList();
-    protected List<DataOutputStream> sendStreams = new ArrayList();
-    protected List<DataInputStream> receiveStreams = new ArrayList();
+    protected List<PackManager> managers = new ArrayList();
     protected Map<UUID, Integer> clientMap = new HashMap<>();
     protected ServerSocket server;
 
@@ -22,14 +23,27 @@ public abstract class AbstractServer extends AbstractDist {
         return new DataInputStream(clients.get(client).getInputStream());
     }
 
-    protected void registerClientUUID(UUID uuid, int no) {
+    public void registerClientUUID(UUID uuid, int no) {
         clientMap.put(uuid, no);
+    }
+
+    public int getNumWithUUID(UUID uuid) {
+        return clientMap.get(uuid);
+    }
+
+    @Override
+    public void run() {
+
     }
 
     protected void accept() throws IOException {
         clients.add(server.accept());
-        sendStreams.add(getS2CSendStream(clients.size() - 1));
-        receiveStreams.add(getC2SReceiveStream(clients.size() - 1));
+        managers.add(
+                new PackManager(
+                        getC2SReceiveStream(clients.size() - 1),
+                        getS2CSendStream(clients.size() - 1),
+                        clients.size() - 1, this
+                ));
     }
 
     protected AbstractServer(int port) throws IOException {
@@ -39,12 +53,18 @@ public abstract class AbstractServer extends AbstractDist {
     }
 
     @Override
-    public List<DataOutputStream> sends() {
-        return sendStreams;
+    public List<PackManager> managers() {
+        return managers;
     }
 
     @Override
-    public List<DataInputStream> receives() {
-        return receiveStreams;
+    public void update() {
+        try {
+            for (PackManager manager : managers) {
+                manager.update();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

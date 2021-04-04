@@ -1,9 +1,8 @@
 package io.theflysong.github.network;
 
+import io.theflysong.github.network.pack.PackManager;
 import io.theflysong.github.util.IUpdater;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.util.List;
 
 public abstract class AbstractDist implements Runnable, IUpdater {
@@ -13,6 +12,5 @@ public abstract class AbstractDist implements Runnable, IUpdater {
         this.dist = dist;
     }
 
-    public abstract List<DataOutputStream> sends();
-    public abstract List<DataInputStream> receives();
+    public abstract List<PackManager> managers();
 }

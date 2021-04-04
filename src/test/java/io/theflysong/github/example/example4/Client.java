@@ -1,5 +1,6 @@
 package io.theflysong.github.example.example4;
 
+import io.theflysong.github.Updater;
 import io.theflysong.github.network.AbstractClient;
 import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.buffer.VertexBufferUnit;
@@ -20,43 +21,57 @@ public class Client extends AbstractClient {
         super(serverIP, port);
     }
 
+    public static VertexPack pack = null;
+
+    private void waitForPack() {
+        while (pack == null) {
+            super.update();
+        }
+    }
+
+    private Window window;
+    private Updater updater;
+    private VertexBufferUnit unit;
+    MatrixStack stack = new MatrixStack();
+
     @Override
     public void run() {
-        System.setProperty("project.debug_mode", "true");
-        Window window = new Window(500, 400, "Example4", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
+        super.run();
+        window = new Window(500, 400, "Example4", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
+        updater = new Updater().setWindow(window);
+
         Shader shader = ResourceLoader.loadShader(
                 new ResourceLocation("example4$test"),
                 new ResourceLocation("example4$test"),
                 new ResourceLocation("example4$test")
         );
-        VertexBufferUnit unit = new VertexBufferUnit(shader, new VertexBufferFormat().
+        unit = new VertexBufferUnit(shader, new VertexBufferFormat().
                 addVertex3F().
                 addColor3F());
-        try {
-            for (int i = 0 ; i < 6 * 4 ; i ++) {
-                unit.addVertex(receiveStream.readFloat());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        for (int i = 0 ; i < 6 * 4 ; i ++) {
+            waitForPack();
+            unit.addVertex(pack.vertices[i]);
         }
+
         unit.addIndex(0).addIndex(1).addIndex(3).addIndex(1).addIndex(2).addIndex(3);
         unit.init();
 
-        MatrixStack stack = new MatrixStack();
-
-        try {
-            do {
-                glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-                unit.use(stack);
-            }
-            while (! window.update());
+        do {
+            update();
         }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        while (! window.shouldClose());
     }
 
     @Override
     public void update() {
+        super.update();
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        unit.use(stack);
+        try {
+            updater.update();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

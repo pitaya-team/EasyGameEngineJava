@@ -12,15 +12,12 @@ public class Client extends AbstractClient {
 
     @Override
     public void run() {
-        try {
-            sendStream.writeUTF("Hello,Server!");
-            System.out.println(receiveStream.readUTF());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super.run();
+        manager.sendPack(new TestPack("Hello, Server!"));
     }
 
     @Override
     public void update() {
+        super.update();
     }
 }

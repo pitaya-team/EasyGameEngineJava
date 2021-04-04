@@ -1,5 +1,7 @@
 package io.theflysong.github.example.example3;
 
+import io.theflysong.github.Init;
+import io.theflysong.github.Updater;
 import io.theflysong.github.render.buffer.VertexBuffer;
 import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.shader.Shader;
@@ -12,9 +14,12 @@ import io.theflysong.github.window.Window;
 import static org.lwjgl.opengl.GL15.*;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
+        Init.init();
+
         System.setProperty("project.debug_mode", "true");
         Window window = new Window(500, 400, "Example3", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
+        Updater updater = new Updater().setWindow(window);
         Shader shader = ResourceLoader.loadShader(
                 new ResourceLocation("example3$test"),
                 new ResourceLocation("example3$test"),
@@ -54,7 +59,8 @@ public class Main {
         do {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
             buffer.draw(matrixStack);
+            updater.update();
         }
-        while (! window.update());
+        while (! window.shouldClose());
     }
 }

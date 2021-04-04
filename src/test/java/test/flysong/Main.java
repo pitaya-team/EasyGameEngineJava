@@ -1,5 +1,6 @@
 package test.flysong;
 
+import io.theflysong.github.Init;
 import io.theflysong.github.render.buffer.VertexBuffer;
 import io.theflysong.github.render.buffer.VertexBufferFormat;
 import io.theflysong.github.render.shader.Shader;
@@ -20,8 +21,9 @@ import static org.lwjgl.stb.STBImage.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, IOException {
+        Init.init();
         System.setProperty("project.debug_mode", "true");
-        Window window = new Window(500, 400, "Example3", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
+        Window window = new Window(500, 400, "Flysong", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
         Shader shader = ResourceLoader.loadShader(
                 new ResourceLocation("flysong$test"),
                 new ResourceLocation("flysong$test"),
