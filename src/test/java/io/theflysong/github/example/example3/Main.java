@@ -13,9 +13,10 @@ import io.theflysong.github.window.Window;
 
 import static org.lwjgl.opengl.GL15.*;
 
+//TODO: with new renderer api
 public class Main {
     public static void main(String[] args) throws Exception {
-        Init.init();
+        /*Init.init();
 
         System.setProperty("project.debug_mode", "true");
         Window window = new Window(500, 400, "Example3", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
@@ -61,6 +62,6 @@ public class Main {
             buffer.draw(matrixStack);
             updater.update();
         }
-        while (! window.shouldClose());
+        while (! window.shouldClose());*/
     }
 }

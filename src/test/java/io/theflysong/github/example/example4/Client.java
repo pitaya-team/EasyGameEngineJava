@@ -16,6 +16,7 @@ import java.net.InetAddress;
 
 import static org.lwjgl.opengl.GL11.*;
 
+//TODO: with new renderer api
 public class Client extends AbstractClient {
     public Client(InetAddress serverIP, int port) throws IOException {
         super(serverIP, port);
@@ -37,7 +38,7 @@ public class Client extends AbstractClient {
     @Override
     public void run() {
         super.run();
-        window = new Window(500, 400, "Example4", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
+        /*window = new Window(500, 400, "Example4", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
         updater = new Updater().setWindow(window);
 
         Shader shader = ResourceLoader.loadShader(
@@ -60,7 +61,7 @@ public class Client extends AbstractClient {
         do {
             update();
         }
-        while (! window.shouldClose());
+        while (! window.shouldClose());*/
     }
 
     @Override

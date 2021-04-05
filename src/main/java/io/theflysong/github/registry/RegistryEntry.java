@@ -1,8 +1,8 @@
-package io.theflysong.github.util;
+package io.theflysong.github.registry;
 
 import io.theflysong.github.resource.ResourceLocation;
 
-public abstract class RegistryEntry implements IRegistry{
+public abstract class RegistryEntry implements IRegistryEntry {
     protected ResourceLocation id;
 
     public RegistryEntry(ResourceLocation id) {

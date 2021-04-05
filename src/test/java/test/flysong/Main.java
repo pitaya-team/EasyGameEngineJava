@@ -19,10 +19,11 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import static org.lwjgl.stb.STBImage.*;
 
+//TODO: with new render api
 public class Main {
     public static void main(String[] args) throws InterruptedException, IOException {
         Init.init();
-        System.setProperty("project.debug_mode", "true");
+        /*System.setProperty("project.debug_mode", "true");
         Window window = new Window(500, 400, "Flysong", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
         Shader shader = ResourceLoader.loadShader(
                 new ResourceLocation("flysong$test"),
@@ -76,6 +77,6 @@ public class Main {
             tex2D.bindTexture(0);
             buffer.draw(matrixStack);
         }
-        while (! window.update());
+        while (! window.update());*/
     }
 }

@@ -1,15 +1,44 @@
 package io.theflysong.github.render.shader;
 
+import io.theflysong.github.registry.Register;
 import io.theflysong.github.resource.ResourceLocation;
-import io.theflysong.github.util.RegistryEntry;
+import io.theflysong.github.registry.RegistryEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL20.*;
 
-public class Shader extends RegistryEntry {
+public class Shader {
     protected int shader;
+    public static class ShaderInfo {
+        public static class Uniform {
+            public interface Apply<S, N> {
+                void apply(S shader, N name);
+            }
+            public static abstract class Uniformer extends RegistryEntry implements Apply<Shader, String> {
+                public Uniformer(ResourceLocation id) {
+                    super(id);
+                }
+            }
+            public static Register<Uniformer> REGISTER = new Register<>("easygame$uniformer");
+            public String name;
+            public Uniformer method;
+
+            public Uniform(String name, ResourceLocation id) {
+                method = REGISTER.getByID(id);
+                this.name = name;
+            }
+
+            public void uniform(Shader shader) {
+                method.apply(shader, name);
+            }
+        }
+        public List<Uniform> uniforms = new ArrayList<>();
+    }
+    protected ShaderInfo info;
 
     public Shader(char[] vertex, char[] fragment, ResourceLocation id) {
-        super(id);
         int vertexId, fragmentId;
         int[] status = new int[1];
 

@@ -10,6 +10,7 @@ import java.util.function.Function;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
 
+//TODO: with new renderer api
 public class VertexBufferUnit {
     protected int VAO;
     protected int VBO;
