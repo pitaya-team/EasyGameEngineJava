@@ -5,12 +5,12 @@ import io.theflysong.github.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
 
-//TODO: with new renderer api
 public class VertexBufferUnit {
     protected int VAO;
     protected int VBO;
@@ -20,7 +20,16 @@ public class VertexBufferUnit {
     protected ArrayList<Integer> indices = new ArrayList<>();
     protected VertexBufferFormat format;
     protected int drawMode;
-    protected Function<MatrixStack, MatrixStack> genMatrix = null;
+    protected MatrixStack stack;
+
+    public VertexBufferUnit transform(MatrixStack stack) {
+        try {
+            this.stack = stack.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
 
     public VertexBufferUnit(Shader shader, VertexBufferFormat format) {
         this(shader, format, GL_STATIC_DRAW);
@@ -42,11 +51,6 @@ public class VertexBufferUnit {
 
     public VertexBufferUnit addVertex(float vertex) {
         vertices.add(vertex);
-        return this;
-    }
-
-    public VertexBufferUnit setMatrix(Function<MatrixStack, MatrixStack> generator) {
-        this.genMatrix = generator;
         return this;
     }
 
@@ -86,22 +90,21 @@ public class VertexBufferUnit {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices2Int(), drawMode);
 
-        List<Integer> layout = format.getLayout();
+        List<Map.Entry<String, Byte>> layout = format.formats;
         int stride = 0;
 
-        for (Integer i : layout) {
-            stride += i;
+        for (Map.Entry<String, Byte> i : layout) {
+            stride += i.getValue();
         }
 
         stride *= Float.BYTES;
 
-        int index = 0;
         int offset = 0;
-        for (Integer i : layout) {
-            glVertexAttribPointer(index, i, GL_FLOAT,false, stride,offset);
+        for (Map.Entry<String, Byte> i : layout) {
+            int index = shader.getInfo().findLocation(i.getKey());
+            glVertexAttribPointer(index, i.getValue(), GL_FLOAT,false, stride,offset);
             glEnableVertexAttribArray(index);
-            offset += i * Float.BYTES;
-            index ++;
+            offset += i.getValue() * Float.BYTES;
         }
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -109,16 +112,8 @@ public class VertexBufferUnit {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    public void use(MatrixStack matrixStack) {
-        if (genMatrix != null) {
-            matrixStack.push();
-            glUniformMatrix4fv(shader.getUniformLocation("matrix"), false, genMatrix.apply(matrixStack).toValue());
-            matrixStack.pop();
-        }
-        else {
-            glUniformMatrix4fv(shader.getUniformLocation("matrix"), false, matrixStack.toValue());
-        }
-        shader.use();
+    public void use() {
+        shader.use(this);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
@@ -126,9 +121,13 @@ public class VertexBufferUnit {
     }
 
     @Override
-    protected void finalize() throws Throwable {
+    protected void finalize() {
         glDeleteVertexArrays(VAO);
         glDeleteBuffers(VBO);
         glDeleteBuffers(IBO);
+    }
+
+    public MatrixStack getTransform() {
+        return stack;
     }
 }

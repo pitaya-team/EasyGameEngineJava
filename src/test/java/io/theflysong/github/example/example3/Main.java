@@ -13,26 +13,21 @@ import io.theflysong.github.window.Window;
 
 import static org.lwjgl.opengl.GL15.*;
 
-//TODO: with new renderer api
 public class Main {
     public static void main(String[] args) throws Exception {
-        /*Init.init();
+        Init.init();
 
         System.setProperty("project.debug_mode", "true");
         Window window = new Window(500, 400, "Example3", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
         Updater updater = new Updater().setWindow(window);
         Shader shader = ResourceLoader.loadShader(
-                new ResourceLocation("example3$test"),
-                new ResourceLocation("example3$test"),
                 new ResourceLocation("example3$test")
         );
 
-        VertexBuffer buffer = new VertexBuffer();
+        VertexBuffer buffer = new VertexBuffer("default");
 
         buffer.add(VertexBuffer.getBuilder(
-                shader, new VertexBufferFormat().
-                        addVertex3F().
-                        addColor3F()).
+                shader, VertexBufferFormat.VER3_COLOR3).
                 pos(0.3f, 0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
                 pos(0.3f, -0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
                 pos(-0.3f, -0.3f, 0.0f).color(1.0f, 1.0f, 0.0f).
@@ -42,9 +37,7 @@ public class Main {
         );
 
         buffer.add(VertexBuffer.getBuilder(
-                shader, new VertexBufferFormat().
-                        addVertex3F().
-                        addColor3F()).
+                shader, VertexBufferFormat.VER3_COLOR3).
                 pos(1.0f, 1.0f, 0.0f).color(1.0f, 0.0f, 0.0f).
                 pos(1.0f, 0.5f, 0.0f).color(0.0f, 1.0f, 0.0f).
                 pos(0.5f, 0.5f, 0.0f).color(0.0f, 0.0f, 1.0f).
@@ -55,13 +48,11 @@ public class Main {
 
         buffer.init();
 
-        MatrixStack matrixStack = new MatrixStack();
-
         do {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-            buffer.draw(matrixStack);
+            buffer.draw();
             updater.update();
         }
-        while (! window.shouldClose());*/
+        while (! window.shouldClose());
     }
 }

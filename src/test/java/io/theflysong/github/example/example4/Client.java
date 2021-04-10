@@ -16,7 +16,6 @@ import java.net.InetAddress;
 
 import static org.lwjgl.opengl.GL11.*;
 
-//TODO: with new renderer api
 public class Client extends AbstractClient {
     public Client(InetAddress serverIP, int port) throws IOException {
         super(serverIP, port);
@@ -38,17 +37,13 @@ public class Client extends AbstractClient {
     @Override
     public void run() {
         super.run();
-        /*window = new Window(500, 400, "Example4", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
+        window = new Window(500, 400, "Example4", new Vec4f(0.2f, 0.3f, 0.3f, 1.0f));
         updater = new Updater().setWindow(window);
 
         Shader shader = ResourceLoader.loadShader(
-                new ResourceLocation("example4$test"),
-                new ResourceLocation("example4$test"),
                 new ResourceLocation("example4$test")
         );
-        unit = new VertexBufferUnit(shader, new VertexBufferFormat().
-                addVertex3F().
-                addColor3F());
+        unit = new VertexBufferUnit(shader, VertexBufferFormat.VER3_COLOR3);
 
         for (int i = 0 ; i < 6 * 4 ; i ++) {
             waitForPack();
@@ -61,14 +56,14 @@ public class Client extends AbstractClient {
         do {
             update();
         }
-        while (! window.shouldClose());*/
+        while (! window.shouldClose());
     }
 
     @Override
     public void update() {
         super.update();
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-        unit.use(stack);
+        unit.use();
         try {
             updater.update();
         } catch (Exception e) {

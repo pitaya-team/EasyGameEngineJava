@@ -31,12 +31,14 @@ public final class ResourceLocation {
         return path;
     }
 
-    public void addPrefix(String prefix) {
+    public ResourceLocation addPrefix(String prefix) {
         path = prefix + path;
+        return this;
     }
 
-    public void addSuffix(String suffix) {
+    public ResourceLocation addSuffix(String suffix) {
         path += suffix;
+        return this;
     }
 
     @Override

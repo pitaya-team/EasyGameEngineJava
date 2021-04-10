@@ -1,5 +1,8 @@
 package io.theflysong.github.resource;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.theflysong.github.render.shader.Shader;
 import io.theflysong.github.render.texture.Texture2D;
 import io.theflysong.github.resource.AssetsResource;
@@ -18,22 +21,28 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class ResourceLoader {
-    public static Shader loadShader(ResourceLocation vertexShader, ResourceLocation fragmentShader, ResourceLocation id) {
-        vertexShader.addPrefix("shader/");
-        fragmentShader.addPrefix("shader/");
-        vertexShader.addSuffix(".glvs");
-        fragmentShader.addSuffix(".glfs");
+    public static Shader loadShader(ResourceLocation id) {
+        ResourceLocation vertexShader = new ResourceLocation(id.toString()).addPrefix("shader/").addSuffix(".glvs");
+        ResourceLocation fragmentShader = new ResourceLocation(id.toString()).addPrefix("shader/").addSuffix(".glfs");
+        ResourceLocation shaderConfig = new ResourceLocation(id.toString()).addPrefix("shader/").addSuffix("_properties.json");
 
-        char[] vertex = new char[32767];
-        char[] fragment = new char[32767];
+        char[] vertex = new char[65536];
+        char[] fragment = new char[65536];
+        JsonElement json = null;
         try {
-            AssetsResourceManager.getInstance().getResource(vertexShader).getResourceAsReader().read(vertex);
-            AssetsResourceManager.getInstance().getResource(fragmentShader).getResourceAsReader().read(fragment);
+            if (AssetsResourceManager.getInstance().getResource(vertexShader).getResourceAsReader().read(vertex) == 65536)
+                throw new ArrayIndexOutOfBoundsException("Your vertex shader code shouldn't over 65535 characters");
+            if (AssetsResourceManager.getInstance().getResource(fragmentShader).getResourceAsReader().read(fragment) == 65536)
+                throw new ArrayIndexOutOfBoundsException("Your fragment shader code shouldn't over 65535 characters");
+            json = new JsonParser().parse(AssetsResourceManager.getInstance().getResource(shaderConfig).getResourceAsReader());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return new Shader(vertex, fragment, id);
+        if (json == null) {
+            throw new NullPointerException("Shader info shouldn't be null!");
+        }
+        return new Shader(vertex, fragment, json, id);
     }
 
     public static Texture2D loadTexture2D(ResourceLocation texture) throws IOException {

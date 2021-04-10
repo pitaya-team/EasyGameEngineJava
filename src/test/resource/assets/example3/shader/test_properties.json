@@ -1,0 +1,17 @@
+{
+  "id": "example3$test",
+  "version": "330 core",
+  "context": {
+    "uniforms": [],
+    "inputs": [
+      {
+        "name": "vertex",
+        "location": 0
+      },
+      {
+        "name": "color",
+        "location": 1
+      }
+    ]
+  }
+}
