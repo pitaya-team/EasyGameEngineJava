@@ -1,0 +1,29 @@
+{
+  "id": "flysong$test",
+  "version": "330 core",
+  "context": {
+    "uniforms": [
+      {
+        "name": "matrix",
+        "type": "easygame$matrix",
+        "args": {
+          "buffer": "default"
+        }
+      }
+    ],
+    "inputs": [
+      {
+        "name": "vertex",
+        "location": 0
+      },
+      {
+        "name": "color",
+        "location": 1
+      },
+      {
+        "name": "tex",
+        "location": 2
+      }
+    ]
+  }
+}

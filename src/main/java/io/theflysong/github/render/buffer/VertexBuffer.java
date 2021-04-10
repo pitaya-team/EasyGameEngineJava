@@ -5,14 +5,24 @@ import io.theflysong.github.util.IBuilder;
 import io.theflysong.github.util.math.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 
 public class VertexBuffer {
-    protected List<VertexBufferUnit> units = new ArrayList();
+    public static Map<String, VertexBuffer> buffers = new HashMap<>();
+    public MatrixStack matrix = new MatrixStack();
+
+    public VertexBuffer(String name) {
+        buffers.put(name, this);
+    }
+
+    protected List<VertexBufferUnit> units = new ArrayList<>();
 
     public static VertexBufferBuilder getBuilder(Shader shader, VertexBufferFormat format, int mode) {
         return VertexBufferBuilder.create().shader(shader).format(format).mode(mode).createUnit();
@@ -23,16 +33,15 @@ public class VertexBuffer {
     }
 
     public void add(VertexBufferBuilder builder) {
-        this.add(builder.build());
+        this.add(builder.build(matrix));
     }
 
     public void add(VertexBufferUnit unit) {
         units.add(unit);
     }
 
-    public void copyLast(Function<MatrixStack, MatrixStack> generator) {
+    public void copyLast() {
         units.add(getLastUnit());
-        getLastUnit().setMatrix(generator);
     }
 
     public VertexBufferUnit getLastUnit() {
@@ -45,9 +54,9 @@ public class VertexBuffer {
         }
     }
 
-    public void draw(MatrixStack matrixStack) {
+    public void draw() {
         for (VertexBufferUnit unit : units) {
-            unit.use(matrixStack);
+            unit.use();
         }
     }
 
@@ -56,6 +65,7 @@ public class VertexBuffer {
         protected Shader shader;
         protected VertexBufferFormat format;
         protected int drawMode = GL_STATIC_DRAW;
+        protected int actNum;
         
         protected VertexBufferBuilder() {
         }
@@ -144,14 +154,13 @@ public class VertexBuffer {
             return this;
         }
 
-        public VertexBufferBuilder matrix(Function<MatrixStack, MatrixStack> generator) {
-            unit.setMatrix(generator);
-            return this;
+        public VertexBufferUnit build(MatrixStack stack) {
+            return unit.transform(stack);
         }
 
         @Override
         public VertexBufferUnit build() {
-            return unit;
+            return build(new MatrixStack());
         }
     }
 }

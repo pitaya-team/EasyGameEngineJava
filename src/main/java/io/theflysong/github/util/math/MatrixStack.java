@@ -8,9 +8,9 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.FloatBuffer;
 import java.util.Stack;
 
-public class MatrixStack {
-    protected Stack<Matrix4f> matrixStack = new Stack();
-    Matrix4f matrix = new Matrix4f();
+public class MatrixStack implements Cloneable{
+    protected Stack<Matrix4f> matrixStack = new Stack<>();
+    protected Matrix4f matrix = new Matrix4f();
 
     public void push() {
         matrixStack.push(new Matrix4f(matrix));
@@ -42,5 +42,9 @@ public class MatrixStack {
 
     public FloatBuffer toValue() {
         return matrix.get(MemoryStack.stackGet().mallocFloat(16));
+    }
+
+    public MatrixStack clone() throws CloneNotSupportedException {
+        return (MatrixStack) super.clone();
     }
 }

@@ -41,13 +41,9 @@ public class Client extends AbstractClient {
         updater = new Updater().setWindow(window);
 
         Shader shader = ResourceLoader.loadShader(
-                new ResourceLocation("example4$test"),
-                new ResourceLocation("example4$test"),
                 new ResourceLocation("example4$test")
         );
-        unit = new VertexBufferUnit(shader, new VertexBufferFormat().
-                addVertex3F().
-                addColor3F());
+        unit = new VertexBufferUnit(shader, VertexBufferFormat.VER3_COLOR3);
 
         for (int i = 0 ; i < 6 * 4 ; i ++) {
             waitForPack();
@@ -67,7 +63,7 @@ public class Client extends AbstractClient {
     public void update() {
         super.update();
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-        unit.use(stack);
+        unit.use();
         try {
             updater.update();
         } catch (Exception e) {
